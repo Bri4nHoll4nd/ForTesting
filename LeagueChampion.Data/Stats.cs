@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,29 +10,25 @@ namespace LeagueChampion.Data
 {
     public class Stats
     {
-        public int StatsId { get; set; }
-        public int Hp { get; set; }
-        public int HpPerLevel { get; set; }
-        public int Mp { get; set; }
-        public int MpPerLevel { get; set; }
-        public int MoveSpeed { get; set; }
-        public int Armour { get; set; }
-        public int ArmourPerLevel { get; set; }
-        public int SpellBlock { get; set; }
-        public int SpellBlockPerLevel { get; set; }
-        public int AttackRange { get; set; }
-        public int HpRegen { get; set; }
-        public int HpRegenPerLevel { get; set; }
-        public int MpRegen { get; set; }
-        public int MpRegenPerLevel { get; set; }
-        public int Crit { get; set; }
-        public int CritPerLevel { get; set; }
-        public int AttackDamage { get; set; }
-        public int AttackDamagePerLevel { get; set; }
-        public int AttackSpeedPerLevel { get; set; }
-        public int AttackSpeed { get; set; }
-
-        public Guid ChampionId { get; set; }
-        public Champion Champion { get; set; }
+        public float Hp { get; set; }
+        public float HpPerLevel { get; set; }
+        public float Mp { get; set; }
+        public float MpPerLevel { get; set; }
+        public float MoveSpeed { get; set; }
+        public float Armour { get; set; }
+        public float ArmourPerLevel { get; set; }
+        public float SpellBlock { get; set; }
+        public float SpellBlockPerLevel { get; set; }
+        public float AttackRange { get; set; }
+        public float HpRegen { get; set; }
+        public float HpRegenPerLevel { get; set; }
+        public float MpRegen { get; set; }
+        public float MpRegenPerLevel { get; set; }
+        public float Crit { get; set; }
+        public float CritPerLevel { get; set; }
+        public float AttackDamage { get; set; }
+        public float AttackDamagePerLevel { get; set; }
+        public float AttackSpeedPerLevel { get; set; }
+        public float AttackSpeed { get; set; }
     }
 }

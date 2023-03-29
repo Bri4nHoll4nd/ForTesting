@@ -9,7 +9,6 @@ namespace LeagueChampion.Data
 {
     public class Image
     {
-        public int ImageId { get; set; }
         public string Full { get; set; }
         public string Sprite { get; set; }
         public string Group { get; set; }
@@ -18,7 +17,6 @@ namespace LeagueChampion.Data
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public Guid ChampionId { get; set; }
-        public Champion Champion { get; set; }
+
     }
 }

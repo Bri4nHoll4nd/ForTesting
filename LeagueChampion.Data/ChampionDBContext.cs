@@ -33,76 +33,11 @@ namespace LeagueChampion.Data
                 mb.Property(champion => champion.Title);
                 mb.Property(champion => champion.Blurb);
 
-                mb.HasOne(champion => champion.Info)
-                    .WithOne(info => info.Champion)
-                    .HasForeignKey<Info>(champion => champion.ChampionId);
-
-                mb.HasOne(champion => champion.Image)
-                    .WithOne(image => image.Champion)
-                    .HasForeignKey<Image>(champion => champion.ChampionId);
-
-                mb.Property(champion => champion.Tag1);
-                mb.Property(champion => champion.Tag2);
-                mb.Property(champion => champion.Partype);
-
-                mb.HasOne(champion => champion.Stats)
-                    .WithOne(stats => stats.Champion)
-                    .HasForeignKey<Stats>(champion => champion.ChampionId);
-
+                mb.OwnsOne(champion => champion.Info);
+                mb.OwnsOne(champion => champion.Image);
+                mb.OwnsOne(champion => champion.Stats);
 
                 mb.HasKey(champion =>champion.Id);
-            });
-
-            modelBuilder.Entity<Info>(mb =>
-            {
-                mb.Property(info => info.InfoId);
-                mb.Property(info => info.Attack);
-                mb.Property(info => info.Defence);
-                mb.Property(info => info.Magic);
-                mb.Property(info => info.Difficulty);
-
-                mb.HasKey(info => info.InfoId);
-            });
-
-            modelBuilder.Entity<Image>(mb =>
-            {
-                mb.Property(image => image.ImageId);
-                mb.Property(image => image.Full);
-                mb.Property(image => image.Sprite);
-                mb.Property(image => image.Group);
-                mb.Property(image => image.X);
-                mb.Property(image => image.Y);
-                mb.Property(image => image.Width);
-                mb.Property(image => image.Height);
-
-                mb.HasKey(image => image.ImageId);
-            });
-
-            modelBuilder.Entity<Stats>(mb =>
-            {
-                mb.Property(stats  => stats.StatsId);
-                mb.Property(stats => stats.Hp);
-                mb.Property(stats => stats.HpPerLevel);
-                mb.Property(stats => stats.Mp);
-                mb.Property(stats => stats.MpPerLevel);
-                mb.Property(stats => stats.MoveSpeed);
-                mb.Property(stats => stats.Armour);
-                mb.Property(stats => stats.ArmourPerLevel);
-                mb.Property(stats => stats.SpellBlock);
-                mb.Property(stats => stats.SpellBlockPerLevel);
-                mb.Property(stats => stats.AttackRange);
-                mb.Property(stats => stats.HpRegen);
-                mb.Property(stats => stats.HpRegenPerLevel);
-                mb.Property(stats => stats.MpRegen);
-                mb.Property(stats => stats.MpRegenPerLevel);
-                mb.Property(stats => stats.Crit);
-                mb.Property(stats => stats.CritPerLevel);
-                mb.Property(stats => stats.AttackDamage);
-                mb.Property(stats => stats.AttackDamagePerLevel);
-                mb.Property(stats => stats.AttackSpeedPerLevel);
-                mb.Property(stats => stats.AttackSpeed);
-
-                mb.HasKey(stats => stats.StatsId);
             });
         }
     }
