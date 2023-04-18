@@ -9,30 +9,31 @@ namespace LeagueVersion.Controllers.V1
     [Route("V1/Version")]
     public class V1VersionController : ControllerBase
     {
+        /*
         private readonly ILogger<V1VersionController> _logger;
 
         public V1VersionController(ILogger<V1VersionController> logger)
         {
             _logger = logger;
         }
+        */
 
-        [HttpGet("")]
-        public async Task<V1Result<IEnumerable<V1Version>>> Get()
+        [HttpGet("Get")]
+        public async Task<V1Result<V1Version>> Get()
         {
             var dbContext = new VersionDBContext();
 
-            var responseVersions = await dbContext.Versions
-                .Select(version => new V1Version
-                {
-                    Id = version.Id,
-                    Name = version.Name
-                })
-                .ToListAsync();
-            
-            return new V1Result<IEnumerable<V1Version>>(responseVersions);
+            var responseVersions = dbContext.Versions.First();
+
+            var result = new V1Result<V1Version>(new V1Version
+            {
+                Name = responseVersions.Name
+            });
+
+            return result;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<V1Result<V1Version>> CreateVersion(V1PostVersion postVersion)
         {
             var dbContext = new VersionDBContext();
@@ -54,7 +55,7 @@ namespace LeagueVersion.Controllers.V1
             return result;
         }
 
-        [HttpPatch]
+        [HttpPatch("Update/{name}")]
         public void PatchVersion(string name)
         {
             var db = new VersionDBContext();

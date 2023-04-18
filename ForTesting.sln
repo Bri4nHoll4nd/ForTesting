@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForTesting", "ForTesting\ForTesting.csproj", "{243EA69C-D3CA-4CC8-99EB-041883F13897}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD5CB722-F0D4-4135-86A5-08869F3F2964} = {BD5CB722-F0D4-4135-86A5-08869F3F2964}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueVersion", "LeagueVersion\LeagueVersion.csproj", "{BD5CB722-F0D4-4135-86A5-08869F3F2964}"
 EndProject
@@ -11,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueVersion.Data", "Leagu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueChampion", "LeagueChampions\LeagueChampion.csproj", "{C062BC34-D51E-437A-95F6-77A391AC9941}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeagueChampion.Data", "LeagueChampion.Data\LeagueChampion.Data.csproj", "{CD271DF1-E0B1-49C2-9090-3DCEB8B38249}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeagueChampion.Data", "LeagueChampion.Data\LeagueChampion.Data.csproj", "{CD271DF1-E0B1-49C2-9090-3DCEB8B38249}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

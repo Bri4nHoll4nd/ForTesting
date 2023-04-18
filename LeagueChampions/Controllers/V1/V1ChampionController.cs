@@ -2,8 +2,6 @@ using LeagueChampion.Data;
 using LeagueChampion.Model.V1;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Eventing.Reader;
-using System.Reflection.Metadata;
 
 namespace LeagueChampion.Controllers.V1
 {
@@ -20,8 +18,8 @@ namespace LeagueChampion.Controllers.V1
         }
         */
 
-        [HttpGet("")]
-        public async Task<V1Result<IEnumerable<V1Champion>>> Get()
+        [HttpGet("GetAll")]
+        public async Task<V1Result<IEnumerable<V1Champion>>> GetChampions()
         {
             var dbContext = new ChampionDBContext();
 
@@ -29,21 +27,128 @@ namespace LeagueChampion.Controllers.V1
                 .Select(champion => new V1Champion
                 {
                     Id = champion.Id,
-                    Name = champion.Name,
+                    Version = champion.Version,
                     RiotId = champion.RiotId,
                     RiotKey = champion.RiotKey,
+                    Name = champion.Name,
                     Title = champion.Title,
                     Blurb = champion.Blurb,
+                    Info = new V1Info
+                    {
+                        Attack = champion.Info.Attack,
+                        Defence = champion.Info.Defence,
+                        Magic = champion.Info.Magic,
+                        Difficulty = champion.Info.Difficulty
+                    },
+                    Image = new V1Image
+                    {
+                        Full = champion.Image.Full,
+                        Sprite = champion.Image.Sprite,
+                        Group = champion.Image.Group,
+                        X = champion.Image.X,
+                        Y = champion.Image.Y,
+                        Width = champion.Image.Width,
+                        Height = champion.Image.Height
+                    },
                     Tag1 = champion.Tag1,
                     Tag2 = champion.Tag2,
-                    Partype = champion.Partype
+                    Partype = champion.Partype,
+                    Stats = new V1Stats
+                    {
+                        Hp = champion.Stats.Hp,
+                        HpPerLevel = champion.Stats.HpPerLevel,
+                        Mp = champion.Stats.Mp,
+                        MpPerLevel = champion.Stats.MpPerLevel,
+                        Armour = champion.Stats.Armour,
+                        ArmourPerLevel = champion.Stats.ArmourPerLevel,
+                        SpellBlock = champion.Stats.SpellBlock,
+                        SpellBlockPerLevel = champion.Stats.SpellBlockPerLevel,
+                        AttackRange = champion.Stats.AttackRange,
+                        HpRegen = champion.Stats.HpRegen,
+                        HpRegenPerLevel = champion.Stats.HpRegenPerLevel,
+                        MpRegen = champion.Stats.MpRegen,
+                        MpRegenPerLevel = champion.Stats.MpRegenPerLevel,
+                        Crit = champion.Stats.Crit,
+                        CritPerLevel = champion.Stats.CritPerLevel,
+                        AttackDamage = champion.Stats.AttackDamage,
+                        AttackDamagePerLevel = champion.Stats.AttackDamagePerLevel,
+                        AttackSpeedPerLevel = champion.Stats.AttackSpeedPerLevel,
+                        AttackSpeed = champion.Stats.AttackSpeed
+                    }
                 })
                 .ToListAsync();
 
             return new V1Result<IEnumerable<V1Champion>>(responseChampions);
         }
 
-        [HttpPost]
+        [HttpGet("Get/{name}")]
+        public async Task<V1Result<V1Champion>> GetChampion(string name)
+        {
+            var dbContext = new ChampionDBContext();
+
+            var champion = dbContext.Champions.Where(champion => champion.Name == name).FirstOrDefault();
+
+            var image = new V1Image
+            {
+                Full = champion.Image.Full,
+                Sprite = champion.Image.Sprite,
+                Group = champion.Image.Group,
+                X = champion.Image.X,
+                Y = champion.Image.Y,
+                Width = champion.Image.Width,
+                Height = champion.Image.Height
+            };
+            var info = new V1Info
+            {
+                Attack = champion.Info.Attack,
+                Defence = champion.Info.Defence,
+                Magic = champion.Info.Magic,
+                Difficulty = champion.Info.Difficulty
+            };
+            var stats = new V1Stats
+            {
+                Hp = champion.Stats.Hp,
+                HpPerLevel = champion.Stats.HpPerLevel,
+                Mp = champion.Stats.Mp,
+                MpPerLevel = champion.Stats.MpPerLevel,
+                Armour = champion.Stats.Armour,
+                ArmourPerLevel = champion.Stats.ArmourPerLevel,
+                SpellBlock = champion.Stats.SpellBlock,
+                SpellBlockPerLevel = champion.Stats.SpellBlockPerLevel,
+                AttackRange = champion.Stats.AttackRange,
+                HpRegen = champion.Stats.HpRegen,
+                HpRegenPerLevel = champion.Stats.HpRegenPerLevel,
+                MpRegen = champion.Stats.MpRegen,
+                MpRegenPerLevel = champion.Stats.MpRegenPerLevel,
+                Crit = champion.Stats.Crit,
+                CritPerLevel = champion.Stats.CritPerLevel,
+                AttackDamage = champion.Stats.AttackDamage,
+                AttackDamagePerLevel = champion.Stats.AttackDamagePerLevel,
+                AttackSpeedPerLevel = champion.Stats.AttackSpeedPerLevel,
+                AttackSpeed = champion.Stats.AttackSpeed
+            };
+
+            var result = new V1Result<V1Champion>(new V1Champion
+            {
+                Id = champion.Id,
+                Version = champion.Version,
+                RiotId = champion.RiotId,
+                RiotKey = champion.RiotKey,
+                Name = champion.Name,
+                Title = champion.Title,
+                Blurb = champion.Blurb,
+                Info = info,
+                Image = image,
+                Tag1 = champion.Tag1,
+                Tag2 = champion.Tag2,
+                Partype = champion.Partype,
+                Stats = stats
+            });
+
+            return result;
+        }
+
+        [HttpPost("Create")]
         public async Task<V1Result<V1Champion>> CreateChampion(V1PostChampion postChampion)
         {
             var dbContext = new ChampionDBContext();
@@ -126,7 +231,7 @@ namespace LeagueChampion.Controllers.V1
             return result;
         }
 
-        [HttpPatch]
+        [HttpPatch("Update/{name}")]
         public void PatchChampion(String name, V1PostChampion postChampion)
         {
             var db = new ChampionDBContext();
